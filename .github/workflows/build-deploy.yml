@@ -3,7 +3,7 @@ name: Build and Deploy Code
 on: [push, pull_request]
 
 jobs:
-  job1:
+  testing_and_build:
     environment: 
       name: testing
     env:
@@ -68,6 +68,16 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [testing_and_build]
+    environment: 
+      name: production
+    steps:
+      - name: running Render Deploy Hook
+        run: curl ${{secrets.RENDER_DEPLOY_URL}}
 
+
+    
 
       
