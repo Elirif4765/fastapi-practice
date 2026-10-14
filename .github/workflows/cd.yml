@@ -5,8 +5,16 @@ on:
     branches:
       - "main"
 
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
 jobs:
+  ci:
+    uses: ./.github/workflows/ci.yml
+    secrets: inherit
+
   build_image:
+    needs: ci
     environment: 
       name: testing
     runs-on: ubuntu-latest

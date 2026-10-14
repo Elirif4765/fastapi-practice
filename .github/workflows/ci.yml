@@ -1,16 +1,14 @@
 name: Continuous Integration (Test)
 
 on:
-  push:
-    branches:
-      - "main"
   pull_request:
     branches:
       - "main"
+  workflow_call:
 
 jobs:
   testing:
-    environment: 
+    environment:
       name: testing
     env:
       DATABASE_HOSTNAME: ${{secrets.DATABASE_HOSTNAME}}
@@ -43,7 +41,7 @@ jobs:
 
       - name: Install Python version 3.14
         uses: actions/setup-python@v7
-        with: 
+        with:
           python-version: "3.14"
 
       - name: update pip
