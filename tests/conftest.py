@@ -108,3 +108,33 @@ def test_vote(test_posts, session, test_user):
     session.add(new_vote)
     session.commit()
     
+
+@pytest.fixture
+def test_comments(test_posts, test_user, test_user2, session):
+    comments_data = [{
+        "content": "1st comment",
+        "post_id": test_posts[0].id,
+        "owner_id": test_user['id']
+    }, {
+        "content": "2nd comment",
+        "post_id": test_posts[0].id,
+        "owner_id": test_user['id']
+    }, {
+        "content": "3rd comment",
+        "post_id": test_posts[1].id,
+        "owner_id": test_user2['id']
+    }, {
+        "content": "4th comment",
+        "post_id": test_posts[3].id,
+        "owner_id": test_user['id']
+    }]
+
+    comments = [models.Comment(**comment) for comment in comments_data]
+
+    session.add_all(comments)
+    session.commit()
+    return session.query(models.Comment).all()
+
+@pytest.fixture
+def updated_comment():
+    return {"content" : "updated comment"}
