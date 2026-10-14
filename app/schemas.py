@@ -55,3 +55,18 @@ class TokenData(BaseModel):
 class Vote(BaseModel):
     post_id: int
     dir: Literal[0,1]
+
+
+class CommentCreate(BaseModel):
+    content: str
+
+class CommentOut(BaseModel):
+    id: int
+    content: str
+    post_id: int
+    owner_id: int
+    created_at: datetime
+    owner: UserOut
+
+    class Config:
+        orm_mode = True
